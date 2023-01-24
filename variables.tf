@@ -19,5 +19,13 @@ variable "pool" {
 }
 
 variable "name" {
-  default = "terraform-k8s-test"
+  default = "tf-k8s"
+}
+
+variable "worker_node_count" {
+  default = 1
+}
+
+variable "worker_node_prefix" {
+  default = "worker"
 }

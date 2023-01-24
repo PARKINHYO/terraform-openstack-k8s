@@ -1,9 +1,9 @@
 variable "image" {
-  default = "k8s-image-1.0"
+  default = "k8s-image-1.0.0"
 }
 
 variable "flavor" {
-  default = "k8s-flaver-test"
+  default = "k8s-type"
 }
 
 variable "ssh_key_file" {

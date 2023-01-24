@@ -154,7 +154,7 @@ resource "openstack_compute_floatingip_associate_v2" "worker_node" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/worker-node.sh",
-      "/tmp/worker-node.sh '${data.openstack_compute_instance_v2.tf_k8s.access_ip_v4}'",
+      "/tmp/worker-node.sh ${data.openstack_compute_instance_v2.tf_k8s.access_ip_v4}",
     ]
   }
 

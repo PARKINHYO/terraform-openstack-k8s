@@ -36,6 +36,14 @@ resource "openstack_networking_router_interface_v2" "tf_k8s" {
   subnet_id = openstack_networking_subnet_v2.tf_k8s.id
 }
 
+resource "openstack_compute_flavor_v2" "tf_k8s" {
+  name  = "k8s-type"
+  ram   = "2048"
+  vcpus = "2"
+  disk  = "20"
+  is_public = true
+}
+
 resource "openstack_networking_secgroup_v2" "tf_k8s" {
   name        = var.name
   description = "Security group for the Terraform example instances"
@@ -134,7 +142,7 @@ resource "openstack_networking_floatingip_v2" "tf_k8s" {
 }
 
 resource "openstack_compute_instance_v2" "tf_k8s" {
-  name            = "${var.name}-control-plane-init"
+  name            = "${var.name}-control-plane"
   image_name      = var.image
   flavor_name     = var.flavor
   key_pair        = openstack_compute_keypair_v2.tf_k8s.name
@@ -167,7 +175,10 @@ resource "openstack_compute_floatingip_associate_v2" "tf_k8s" {
     ]
   }
 
-  depends_on = [openstack_networking_floatingip_v2.tf_k8s, openstack_compute_instance_v2.tf_k8s]
+  depends_on = [
+    openstack_networking_floatingip_v2.tf_k8s, 
+    openstack_compute_instance_v2.tf_k8s
+    ]
 }
 
 ################################################################################
@@ -207,16 +218,19 @@ resource "openstack_compute_floatingip_associate_v2" "worker_node" {
   }
 
   provisioner "file" {
-    source      = "worker-node.sh"
-    destination = "/tmp/worker-node.sh"
+    source      = "worker_node.sh"
+    destination = "/tmp/worker_node.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /tmp/worker-node.sh",
-      "/tmp/worker-node.sh ${data.openstack_compute_instance_v2.tf_k8s.access_ip_v4}",
+      "chmod +x /tmp/worker_node.sh",
+      "/tmp/worker_node.sh ${data.openstack_compute_instance_v2.tf_k8s.access_ip_v4}",
     ]
   }
 
-  depends_on = [openstack_networking_floatingip_v2.worker_node, openstack_compute_instance_v2.worker_node]
+  depends_on = [
+    openstack_networking_floatingip_v2.worker_node, 
+    openstack_compute_instance_v2.worker_node
+    ]
 }

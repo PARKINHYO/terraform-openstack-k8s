@@ -1,7 +1,6 @@
 #!/bin/sh
 
 sleep 5
-
 sudo kubeadm init \
 --token abcdef.1234567890abcdef \
 --token-ttl 0 \
@@ -9,7 +8,6 @@ sudo kubeadm init \
 --pod-network-cidr=10.244.0.0/16
 
 sleep 5
-
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config

@@ -18,7 +18,4 @@ sleep 3
 echo -e "\n\n# kubectl alias\nalias k='kubectl'" >> ~/.bashrc
 
 sleep 3
-source ~/.bashrc
-
-sleep 3
 kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml

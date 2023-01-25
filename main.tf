@@ -61,10 +61,70 @@ resource "openstack_networking_secgroup_rule_v2" "tf_k8s_80" {
   security_group_id = openstack_networking_secgroup_v2.tf_k8s.id
 }
 
-resource "openstack_networking_secgroup_rule_v2" "tf_k8s" {
+resource "openstack_networking_secgroup_rule_v2" "tf_k8s_icmp" {
   direction         = "ingress"
   ethertype         = "IPv4"
   protocol          = "icmp"
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = openstack_networking_secgroup_v2.tf_k8s.id
+}
+
+resource "openstack_networking_secgroup_rule_v2" "tf_k8s_api" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 6443
+  port_range_max    = 6443
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = openstack_networking_secgroup_v2.tf_k8s.id
+}
+
+resource "openstack_networking_secgroup_rule_v2" "tf_k8s_etcd" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 2379
+  port_range_max    = 2380
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = openstack_networking_secgroup_v2.tf_k8s.id
+}
+
+resource "openstack_networking_secgroup_rule_v2" "tf_k8s_kubelet" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 10250
+  port_range_max    = 10250
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = openstack_networking_secgroup_v2.tf_k8s.id
+}
+
+resource "openstack_networking_secgroup_rule_v2" "tf_k8s_scheduler" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 10259
+  port_range_max    = 10259
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = openstack_networking_secgroup_v2.tf_k8s.id
+}
+
+resource "openstack_networking_secgroup_rule_v2" "tf_k8s_controller_manager" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 10257
+  port_range_max    = 10257
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = openstack_networking_secgroup_v2.tf_k8s.id
+}
+
+resource "openstack_networking_secgroup_rule_v2" "tf_k8s_nodeport_svc" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 30000
+  port_range_max    = 32767
   remote_ip_prefix  = "0.0.0.0/0"
   security_group_id = openstack_networking_secgroup_v2.tf_k8s.id
 }

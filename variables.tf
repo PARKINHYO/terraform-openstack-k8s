@@ -1,9 +1,9 @@
 variable "image" {
-  default = "k8s-image-1.0"
+  default = "k8s-image-1.0.0"
 }
 
 variable "flavor" {
-  default = "k8s-flaver-test"
+  default = "k8s-type"
 }
 
 variable "ssh_key_file" {
@@ -19,5 +19,13 @@ variable "pool" {
 }
 
 variable "name" {
-  default = "terraform-k8s-test"
+  default = "tf-k8s"
+}
+
+variable "worker_node_count" {
+  default = 1
+}
+
+variable "worker_node_prefix" {
+  default = "worker"
 }

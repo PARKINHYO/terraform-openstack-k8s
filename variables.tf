@@ -29,3 +29,7 @@ variable "worker_node_count" {
 variable "worker_node_prefix" {
   default = "worker"
 }
+
+variable "control_plane_private_ip" {
+  default = "10.0.0.11"
+}

@@ -2,8 +2,12 @@ variable "image" {
   default = "k8s-image-1.0.0"
 }
 
-variable "flavor" {
-  default = "k8s-type"
+variable "flavor_control_plane" {
+  default = "k8s-type-control-plane"
+}
+
+variable "flavor_worker_node" {
+  default = "k8s-type-worker-node"
 }
 
 variable "ssh_key_file" {

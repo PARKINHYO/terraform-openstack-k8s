@@ -1,1 +1,1 @@
-worker_node_count = __WORKER_CNT__
+worker_node_count = 1
